@@ -168,14 +168,9 @@
         <div class="nav-links">
             <a href="{% url 'user_home' %}" class="active">Dashboard</a>
             <a href="{% url 'hasil_topsis' %}">Hasil Ranking</a>
-            
-    <!-- hanya u/ admin & staff -->
-            {% if user_profile.can_input_data %}
+    
+            {% if user.is_staff or user.is_superuser %}
             <a href="{% url 'input_nilai' %}">Input Data</a>
-            {% endif %}
-            
-            <!-- Hanya tampilkan Analytics untuk admin & staff -->
-            {% if user_profile.is_staff_user %}
             <a href="{% url 'analytics_dashboard' %}">Analisis</a>
             {% endif %}
         </div>
