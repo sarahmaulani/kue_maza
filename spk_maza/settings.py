@@ -13,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-auxuh+8=9(%yb&6hpsszc-y)v2x1t9=k1zrnsm33zt!xz96y(9'
 
 # DEBUG: True untuk development, False untuk production
-DEBUG = False  # ← SET FALSE untuk Railway
+DEBUG = True # ← SET FALSE untuk Railway
 
 # Host yang diizinkan mengakses
 ALLOWED_HOSTS = [
