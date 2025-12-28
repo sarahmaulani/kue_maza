@@ -13,7 +13,9 @@ class UserProfile(models.Model):
     
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='viewer')
-    phone = models.CharField(max_length=20, blank=True)
+    # phone = models.CharField(max_length=20, blank=True)
+    telepon = models.CharField(max_length=20, blank=True, default='')
+    alamat = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     
     #mo nampilin username sama roleny
