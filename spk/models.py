@@ -45,35 +45,35 @@ class Periode(models.Model):
     nama_periode = models.CharField(max_length=100, default='Periode 1')
     tahun = models.IntegerField(default=2024)
     
-    def __str__(self):
-        return f"{self.nama_periode} {self.tahun}"
-    nama = models.CharField(max_length=100) 
-    tanggal_mulai = models.DateField()
-    tanggal_selesai = models.DateField()
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    urutin periode terbaru
-    class Meta:
-        ordering = ['-tanggal_mulai']
-   #tampilin status dan nama perode
-    def __str__(self):
-        status = "(aktif)" if self.is_active else "(non-Aktif)"
-        return f"{status} {self.nama}"
+   #  def __str__(self):
+   #      return f"{self.nama_periode} {self.tahun}"
+   #  nama = models.CharField(max_length=100) 
+   #  tanggal_mulai = models.DateField()
+   #  tanggal_selesai = models.DateField()
+   #  is_active = models.BooleanField(default=True)
+   #  created_at = models.DateTimeField(auto_now_add=True)
+   #  urutin periode terbaru
+   #  class Meta:
+   #      ordering = ['-tanggal_mulai']
+   # #tampilin status dan nama perode
+   #  def __str__(self):
+   #      status = "(aktif)" if self.is_active else "(non-Aktif)"
+   #      return f"{status} {self.nama}"
    
-     # fungsi buat cek apakah periode lg berjalan?
-    def is_current(self):
-        """Cek apakah periode sedang berjalan"""
-        today = timezone.now().date()
-        return self.tanggal_mulai <= today <= self.tanggal_selesai
-    #ambil data ranking
-    def get_ranking_data(self):
-        from .utils import hitung_topsis
-        return hitung_topsis(self.id)
-    #ambil periode sebelumnya
-    def get_periode_sebelumnya(self):
-        return Periode.objects.filter(
-            tanggal_mulai__lt=self.tanggal_mulai
-        ).order_by('-tanggal_mulai').first()
+   #   # fungsi buat cek apakah periode lg berjalan?
+   #  def is_current(self):
+   #      """Cek apakah periode sedang berjalan"""
+   #      today = timezone.now().date()
+   #      return self.tanggal_mulai <= today <= self.tanggal_selesai
+   #  #ambil data ranking
+   #  def get_ranking_data(self):
+   #      from .utils import hitung_topsis
+   #      return hitung_topsis(self.id)
+   #  #ambil periode sebelumnya
+   #  def get_periode_sebelumnya(self):
+   #      return Periode.objects.filter(
+   #          tanggal_mulai__lt=self.tanggal_mulai
+   #      ).order_by('-tanggal_mulai').first()
 
     
     
