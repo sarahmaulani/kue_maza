@@ -10,7 +10,18 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Periode)
 class PeriodeAdmin(admin.ModelAdmin):
-    list_display = ['id','nama_periode', 'tahun']
+    list_display = (
+        'id',
+        'nama',
+        'nama_periode',
+        'tahun',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'is_active',
+    )
+    list_filter = ('is_active', 'tahun')
+    search_fields = ('nama', 'nama_periode')
+    ordering = ('-tanggal_mulai',)
 
 @admin.register(Produk)
 class ProdukAdmin(admin.ModelAdmin):
