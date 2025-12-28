@@ -83,12 +83,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'spk_maza.wsgi.application'
 
 # ========== DATABASE ==========
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if os.environ.get('DATABASE_URL'):  # Railway kasih ini otomatis
+    import dj_database_url
+    DATABASES = {
+        'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
     }
-}
+else:
+    # Fallback ke SQLite
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
 
 # ========== PASSWORD VALIDATION ==========
 AUTH_PASSWORD_VALIDATORS = [
