@@ -40,11 +40,13 @@ class UserProfile(models.Model):
         return self.user.username
 # periode waktu u/ penilaian
 class Periode(models.Model):
-    nama = models.CharField(max_length=100) 
-    tanggal_mulai = models.DateField()
-    tanggal_selesai = models.DateField()
-    is_active = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    nama_periode = models.CharField(max_length=100)
+    tahun = models.IntegerField()
+    # nama = models.CharField(max_length=100) 
+    # tanggal_mulai = models.DateField()
+    # tanggal_selesai = models.DateField()
+    # is_active = models.BooleanField(default=True)
+    # created_at = models.DateTimeField(auto_now_add=True)
     #urutin periode terbaru
     class Meta:
         ordering = ['-tanggal_mulai']
