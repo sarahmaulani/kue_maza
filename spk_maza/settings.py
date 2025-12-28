@@ -27,6 +27,18 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# Trusted origins for CSRF protection
+CSRF_TRUSTED_ORIGINS = [
+    'https://kuemaza-production.up.railway.app',
+    'https://*.railway.app',  # Semua subdomain railway
+]
+
+# Untuk development, bisa juga tambah:
+CSRF_COOKIE_SECURE = True  # ← WAJIB untuk HTTPS
+SESSION_COOKIE_SECURE = True  # ← WAJIB untuk HTTPS
+CSRF_COOKIE_SAMESITE = 'None'  # Penting untuk cross-origin
+SESSION_COOKIE_SAMESITE = 'None'
+
 
 # Application definition
 
