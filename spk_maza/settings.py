@@ -25,19 +25,27 @@ SECRET_KEY = 'django-insecure-auxuh+8=9(%yb&6hpsszc-y)v2x1t9=k1zrnsm33zt!xz96y(9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# DI settings.py, cari/tambah:
 
-# Trusted origins for CSRF protection
-CSRF_TRUSTED_ORIGINS = [
-    'https://kuemaza-production.up.railway.app',
-    'https://*.railway.app',  # Semua subdomain railway
+ALLOWED_HOSTS = [
+    'kuemaza-production.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+    '.railway.app',
 ]
 
-# Untuk development, bisa juga tambah:
-CSRF_COOKIE_SECURE = True  # ← WAJIB untuk HTTPS
-SESSION_COOKIE_SECURE = True  # ← WAJIB untuk HTTPS
-CSRF_COOKIE_SAMESITE = 'None'  # Penting untuk cross-origin
-SESSION_COOKIE_SAMESITE = 'None'
+# 🔥 TAMBAH INI 🔥
+CSRF_TRUSTED_ORIGINS = [
+    'https://kuemaza-production.up.railway.app',
+    'https://*.railway.app',
+    'https://*.up.railway.app',
+]
+
+# Untuk HTTPS (Railway pakai HTTPS)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 # Application definition
