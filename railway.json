@@ -3,6 +3,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python manage.py makemigrations --noinput && python manage.py migrate --noinput && python auto_create_admin.py && python manage.py collectstatic --noinput && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
+    "startCommand": "python manage.py migrate auth --noinput && python manage.py migrate admin --noinput && python manage.py migrate sessions --noinput && python manage.py migrate contenttypes --noinput && python create_admin_simple.py && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
   }
 }
