@@ -34,7 +34,7 @@ class UserProfile(models.Model):
     def can_view_reports(self):
         return self.role in ['admin', 'staff', 'viewer']
 
-     class Meta:
+    class Meta:
         app_label = 'spk'  # Explicit app label
     
     def __str__(self):
