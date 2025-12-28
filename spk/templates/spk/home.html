@@ -166,14 +166,19 @@
    <nav class="nav-bar">
     <div class="nav-content">
         <div class="nav-links">
-            <a href="{% url 'user_home' %}" class="active">Dashboard</a>
-            <a href="{% url 'hasil_topsis' %}">Hasil Ranking</a>
+            <a href="{% url 'user_home' %}" class="{% if request.path == '/home/' %}active{% endif %}">Dashboard</a>
+            <a href="{% url 'hasil_topsis' %}" class="{% if '/hasil/' in request.path %}active{% endif %}">Hasil Ranking</a>
     
-            {% if user.is_staff or user.is_superuser %}
-            <a href="{% url 'input_nilai' %}">Input Data</a>
-            <a href="{% url 'analytics_dashboard' %}">Analisis</a>
-            {% endif %}
-        </div>
+    <!-- Tampilkan Input Data hanya untuk user yang bisa input -->
+        {% if user_profile.can_input_data or user.is_staff or user.is_superuser %}
+        <a href="{% url 'input_nilai' %}" class="{% if '/input-nilai/' in request.path %}active{% endif %}">Input Data</a>
+        {% endif %}
+    
+    <!-- Tampilkan Analisis hanya untuk admin & staff -->
+        {% if user_profile.is_staff_user or user.is_staff or user.is_superuser %}
+            <a href="{% url 'analytics_dashboard' %}" class="{% if '/analytics/' in request.path %}active{% endif %}">Analisis</a>
+        {% endif %}
+</div>
      </div>
     </nav>
     
