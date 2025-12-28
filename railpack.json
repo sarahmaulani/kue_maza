@@ -1,0 +1,8 @@
+{
+  "build": {
+    "python": {
+      "version": "3.11"
+    }
+  },
+  "start": "gunicorn spk.wsgi:application"
+}
