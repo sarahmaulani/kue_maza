@@ -4,5 +4,5 @@
       "version": "3.11"
     }
   },
-  "start": "gunicorn spk.wsgi:application"
+  "start": "gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
 }
