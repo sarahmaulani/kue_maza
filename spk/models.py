@@ -42,8 +42,8 @@ class UserProfile(models.Model):
         return self.user.username
 # periode waktu u/ penilaian
 class Periode(models.Model):
-    nama = models.CharField(max_length=100)
-    tahun = models.IntegerField()
+   nama_periode = models.CharField(max_length=100, default='Periode 1')
+   tahun = models.IntegerField(default=2025)
     # nama = models.CharField(max_length=100) 
     # tanggal_mulai = models.DateField()
     # tanggal_selesai = models.DateField()
