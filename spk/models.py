@@ -42,8 +42,11 @@ class UserProfile(models.Model):
         return self.user.username
 # periode waktu u/ penilaian
 class Periode(models.Model):
-   nama_periode = models.CharField(max_length=100, default='Periode 1')
-   tahun = models.IntegerField(default=2025)
+    nama_periode = models.CharField(max_length=100, default='Periode 1')
+    tahun = models.IntegerField(default=2024)
+    
+    def __str__(self):
+        return f"{self.nama_periode} {self.tahun}"
     # nama = models.CharField(max_length=100) 
     # tanggal_mulai = models.DateField()
     # tanggal_selesai = models.DateField()
@@ -72,8 +75,7 @@ class Periode(models.Model):
    #          tanggal_mulai__lt=self.tanggal_mulai
    #      ).order_by('-tanggal_mulai').first()
 
-    def __str__(self):
-        return f"{self.nama_periode} {self.tahun}"
+    
     
     # produk (termasuk apa yang dinilai)
 class Produk(models.Model):
