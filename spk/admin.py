@@ -10,7 +10,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Periode)
 class PeriodeAdmin(admin.ModelAdmin):
-    list_display = ['nama_periode', 'tahun']
+    list_display = ['id','nama_periode', 'tahun']
 
 @admin.register(Produk)
 class ProdukAdmin(admin.ModelAdmin):
