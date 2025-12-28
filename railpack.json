@@ -1,7 +1,7 @@
 {
   "build": {
     "python": {
-      "version": "3.11"
+      "version": "3.10.6"
     }
   },
   "start": "gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
