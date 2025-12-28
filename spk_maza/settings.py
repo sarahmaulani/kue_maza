@@ -37,17 +37,28 @@ ALLOWED_HOSTS = [
 # 🔥 TAMBAH INI 🔥
 CSRF_TRUSTED_ORIGINS = [
     'https://kuemaza-production.up.railway.app',
-    'https://*.railway.app',
+    # 'https://*.railway.app',
     'https://*.up.railway.app',
 ]
 
 # Untuk HTTPS (Railway pakai HTTPS)
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_DOMAIN = '.railway.app'
-CSRF_USE_SESSIONS = True
+# CSRF_COOKIE_DOMAIN = '.railway.app'
+# CSRF_USE_SESSIONS = True
+DEBUG = True
+
+CSRF_COOKIE_SAMESITE = 'Lax'  # atau 'None' jika perlu
+SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_HTTPONLY = False  # Biarkan False untuk CSRF token
+SESSION_COOKIE_HTTPONLY = True
+
+# Static files (penting!)
+STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # ← TAMBAH INI
+
 
 
 # Application definition
