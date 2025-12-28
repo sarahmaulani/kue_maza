@@ -3,6 +3,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python manage.py makemigrations --noinput && python manage.py migrate --noinput && (python -c \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin123')\" 2>/dev/null || python -c \"from django.contrib.auth.models import User; u=User.objects.get(username='admin'); u.set_password('admin123'); u.save()\") && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
+    "startCommand": "rm -f db.sqlite3 && rm -rf spk/migrations/ && python manage.py makemigrations spk --noinput && python manage.py migrate --noinput && python -c \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin123')\" && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
   }
 }
