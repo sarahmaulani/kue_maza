@@ -3,6 +3,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python manage.py migrate --noinput && echo \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin123')\" | python manage.py shell && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
+    "startCommand": "python manage.py migrate --noinput && python -c \"from django.contrib.auth.models import User; from spk.models import UserProfile; User.objects.create_superuser('admin', 'admin@example.com', 'admin123')\" && python -c \"from django.contrib.auth.models import User; from spk.models import UserProfile; [UserProfile.objects.get_or_create(user=u) for u in User.objects.all()]\" && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
   }
 }
