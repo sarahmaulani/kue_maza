@@ -27,7 +27,7 @@ class UserProfile(models.Model):
         return self.role == 'admin'
     
     def is_staff_user(self):
-        return self.role in ['admin', 'staff']
+        return self.role in ['admin', 'staff', 'viewer']
     
     def can_input_data(self):
         return self.role in ['admin', 'staff']
