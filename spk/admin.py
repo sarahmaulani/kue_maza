@@ -30,10 +30,11 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(Periode)
 class PeriodeAdmin(admin.ModelAdmin):
-    list_display = ['nama', 'tanggal_mulai', 'tanggal_selesai', 'is_active', 'is_current']
-    list_filter = ['is_active', 'tanggal_mulai']
-    list_editable = ['is_active']
-    search_fields = ['nama']
+    list_display = ['user', 'telepon', 'alamat']
+    # list_display = ['nama', 'tanggal_mulai', 'tanggal_selesai', 'is_active', 'is_current']
+    # list_filter = ['is_active', 'tanggal_mulai']
+    # list_editable = ['is_active']
+    # search_fields = ['nama']
 
 @admin.register(Produk)
 class ProdukAdmin(admin.ModelAdmin):
