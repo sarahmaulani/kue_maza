@@ -4,5 +4,5 @@
       "version": "3.10.6"
     }
   },
-  "start": "gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
+  "startCommand": "if [ -f db.sqlite3.backup ]; then cp db.sqlite3.backup db.sqlite3; echo 'Database restored'; fi && python manage.py migrate --noinput && python create_admin_simple.py && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
 }
