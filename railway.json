@@ -3,6 +3,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python manage.py migrate --noinput && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
+    "startCommand": "python manage.py migrate --noinput && python manage.py createsuperuser --noinput || true && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
   }
 }
