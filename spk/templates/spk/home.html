@@ -169,9 +169,9 @@
             <a href="{% url 'user_home' %}" class="active">Dashboard</a>
             <a href="{% url 'hasil_topsis' %}">Hasil Ranking</a>
         
-            <a href="{% url 'input_nilai' %}">Input Data</a>
+            <a href="{% url 'input_nilai' %}" class="{% if '/input-nilai/' in request.path %}active{% endif %}">Input Data</a>
         
-            <a href="{% url 'analytics_dashboard' %}">Analisis</a>
+            <a href="{% url 'analytics_dashboard' %}" class="{% if '/analytics/' in request.path %}active{% endif %}">Analisis</a>
             
         </div>
      </div>
