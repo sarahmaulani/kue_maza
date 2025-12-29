@@ -165,9 +165,9 @@ def input_nilai(request):
     try:
         user_profile = UserProfile.objects.get(user=request.user)
         
-        if not user_profile.can_input_data():
-            messages.error(request, 'Anda tidak memiliki izin untuk input data.')
-            return redirect('user_home')
+        # if not user_profile.can_input_data():
+        #     messages.error(request, 'Anda tidak memiliki izin untuk input data.')
+        #     return redirect('user_home')
         
         periode_aktif = Periode.objects.filter(is_active=True).order_by('-tanggal_mulai').first()
         
@@ -219,7 +219,7 @@ def input_nilai(request):
             'user_profile': user_profile,
             'periode_aktif': periode_aktif,
         }
-        return render(request, 'templates/spk/input_nilai.html', context)
+        return render(request, 'spk/input_nilai.html', context)
         
     except Exception as e:
         print(f"Error di input_nilai: {e}")
@@ -252,7 +252,7 @@ def analytics_dashboard(request):
             'kriteria_analysis': kriteria_analysis,
             'performance_comparison': performance_comparison,
         }
-        return render(request, 'templates/spk/analytics.html', context)
+        return render(request, 'spk/analytics.html', context)
         
     except Exception as e:
         print(f"Error di analytics: {e}")
