@@ -48,7 +48,7 @@ def user_logout(request):
     messages.success(request, 'Anda telah berhasil logout.')
     return redirect('login')
 
-def role_required(allowed_roles=[]):
+def role_required(allowed_roles=['admin', 'staff', 'viewer']):
     def decorator(view_func):
         @login_required
         def wrapper(request, *args, **kwargs):
@@ -159,7 +159,7 @@ def hasil_topsis(request, periode_id=None):
         }
         return render(request, 'spk/hasil_topsis.html', context)
 
-@role_required(['admin', 'staff'])
+@role_required(['admin', 'staff', 'viewer'])
 def input_nilai(request):
     """Halaman input nilai - hanya untuk admin & staff"""
     try:
@@ -226,7 +226,7 @@ def input_nilai(request):
         messages.error(request, 'Terjadi error saat mengakses halaman input data.')
         return redirect('user_home')
 
-@role_required(['admin', 'staff'])
+@role_required(['admin', 'staff', 'viewer'])
 def analytics_dashboard(request):
     """Halaman analytics - hanya untuk admin & staff"""
     try:
@@ -259,7 +259,7 @@ def analytics_dashboard(request):
         messages.error(request, 'Terjadi error saat memuat data analytics.')
         return redirect('user_home')
 
-@role_required(['admin', 'staff'])
+@role_required(['admin', 'staff', 'viewer'])
 def export_report(request, report_type='ranking'):
     """Export laporan - hanya untuk admin & staff"""
     try:
