@@ -54,7 +54,7 @@ def role_required(allowed_roles=['admin', 'staff', 'viewer']):
         def wrapper(request, *args, **kwargs):
             try:
                 user_profile = UserProfile.objects.get(user=request.user)
-                if user_profile.role in allowed_roles or user_profile.role == 'admin':
+                if user_profile.role in allowed_roles:
                     return view_func(request, *args, **kwargs)
                 else:
                     messages.error(request, 'Anda tidak memiliki akses ke halaman ini.')
@@ -219,12 +219,12 @@ def input_nilai(request):
             'user_profile': user_profile,
             'periode_aktif': periode_aktif,
         }
-        return render(request, 'spk/input_nilai.html', context)
+        return render(request, 'templates/spk/input_nilai.html', context)
         
-    except Exception as e:
-        print(f"Error di input_nilai: {e}")
-        messages.error(request, 'Terjadi error saat mengakses halaman input data.')
-        return redirect('user_home')
+    # except Exception as e:
+    #     print(f"Error di input_nilai: {e}")
+    #     messages.error(request, 'Terjadi error saat mengakses halaman input data.')
+    #     return redirect('user_home')
 
 @role_required(['admin', 'staff', 'viewer'])
 def analytics_dashboard(request):
@@ -252,12 +252,12 @@ def analytics_dashboard(request):
             'kriteria_analysis': kriteria_analysis,
             'performance_comparison': performance_comparison,
         }
-        return render(request, 'spk/analytics.html', context)
+        return render(request, 'templates/spk/analytics.html', context)
         
-    except Exception as e:
-        print(f"Error di analytics: {e}")
-        messages.error(request, 'Terjadi error saat memuat data analytics.')
-        return redirect('user_home')
+    # except Exception as e:
+    #     print(f"Error di analytics: {e}")
+    #     messages.error(request, 'Terjadi error saat memuat data analytics.')
+    #     return redirect('user_home')
 
 @role_required(['admin', 'staff', 'viewer'])
 def export_report(request, report_type='ranking'):
