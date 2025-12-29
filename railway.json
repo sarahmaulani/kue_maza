@@ -1,8 +1,0 @@
-{
-  "build": {
-    "builder": "NIXPACKS"
-  },
-  "deploy": {
-    "startCommand": "rm -f db.sqlite3 && rm -rf spk/migrations/ && python manage.py makemigrations spk --noinput && python manage.py migrate --noinput && python manage.py shell -c \"from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@example.com', 'admin123')\" && gunicorn spk_maza.wsgi:application --bind 0.0.0.0:$PORT"
-  }
-}
