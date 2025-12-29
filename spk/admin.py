@@ -12,7 +12,6 @@ class UserProfileAdmin(admin.ModelAdmin):
 class PeriodeAdmin(admin.ModelAdmin):
     list_display = (
         'id',
-        'nama',
         'nama_periode',
         'tahun',
         'tanggal_mulai',
