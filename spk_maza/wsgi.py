@@ -8,6 +8,8 @@ https://docs.djangoproject.com/en/5.2/howto/deployment/wsgi/
 """
 
 import os
+import spk.init_admin
+spk.init_admin.run()
 
 from django.core.wsgi import get_wsgi_application
 
