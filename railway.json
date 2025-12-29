@@ -3,6 +3,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "python manage.py migrate && gunicorn spk_maza.wsgi"
+    "startCommand": "python manage.py migrate && python create_admin.py && gunicorn spk_maza.wsgi"
   }
 }
