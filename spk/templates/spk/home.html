@@ -166,16 +166,29 @@
    <nav class="nav-bar">
     <div class="nav-content">
         <div class="nav-links">
-            <a href="{% url 'user_home' %}" class="active">Dashboard</a>
-            <a href="{% url 'hasil_topsis' %}">Hasil Ranking</a>
-        
-            <a href="{% url 'input_nilai' %}" class="{% if '/input-nilai/' in request.path %}active{% endif %}">Input Data</a>
-        
-            <a href="{% url 'analytics_dashboard' %}" class="{% if '/analytics/' in request.path %}active{% endif %}">Analisis</a>
-            
+            <a href="{% url 'user_home' %}" 
+               class="{% if request.path == '/' or 'dashboard' in request.path %}active{% endif %}">
+               Dashboard
+            </a>
+
+            <a href="{% url 'hasil_topsis' %}" 
+               class="{% if 'hasil' in request.path %}active{% endif %}">
+               Hasil Ranking
+            </a>
+
+            <a href="{% url 'input_nilai' %}" 
+               class="{% if 'input-nilai' in request.path %}active{% endif %}">
+               Input Data
+            </a>
+
+            <a href="{% url 'analytics_dashboard' %}" 
+               class="{% if 'analytics' in request.path %}active{% endif %}">
+               Analisis
+            </a>
         </div>
-     </div>
-    </nav>
+    </div>
+</nav>
+
     
     <!-- Main Content -->
     <div class="container">
