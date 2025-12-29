@@ -221,10 +221,10 @@ def input_nilai(request):
         }
         return render(request, 'templates/spk/input_nilai.html', context)
         
-    # except Exception as e:
-    #     print(f"Error di input_nilai: {e}")
-    #     messages.error(request, 'Terjadi error saat mengakses halaman input data.')
-    #     return redirect('user_home')
+    except Exception as e:
+        print(f"Error di input_nilai: {e}")
+        messages.error(request, 'Terjadi error saat mengakses halaman input data.')
+        return redirect('user_home')
 
 @role_required(['admin', 'staff', 'viewer'])
 def analytics_dashboard(request):
@@ -254,10 +254,10 @@ def analytics_dashboard(request):
         }
         return render(request, 'templates/spk/analytics.html', context)
         
-    # except Exception as e:
-    #     print(f"Error di analytics: {e}")
-    #     messages.error(request, 'Terjadi error saat memuat data analytics.')
-    #     return redirect('user_home')
+    except Exception as e:
+        print(f"Error di analytics: {e}")
+        messages.error(request, 'Terjadi error saat memuat data analytics.')
+        return redirect('user_home')
 
 @role_required(['admin', 'staff', 'viewer'])
 def export_report(request, report_type='ranking'):
