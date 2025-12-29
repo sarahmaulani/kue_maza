@@ -10,9 +10,9 @@ email = os.environ.get("DJANGO_SUPERUSER_EMAIL")
 if username and password:
     if not User.objects.filter(username=username).exists():
         User.objects.create_superuser(
-            username=username,
+            username=admin,
             email=email,
-            password=password
+            password=admin123
         )
         print("Superuser created")
     else:
