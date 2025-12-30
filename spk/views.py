@@ -50,9 +50,13 @@ def user_logout(request):
 
 def role_required(allowed_roles=['admin', 'staff', 'viewer']):
     def decorator(view_func):
-        @login_required
+        @login_required(login_url='/spk/login/')
         def wrapper(request, *args, **kwargs):
             try:
+                # Cek jika user sudah logout
+                if not request.user.is_authenticated:
+                    return redirect('login')
+                    
                 user_profile = UserProfile.objects.get(user=request.user)
                 if user_profile.role in allowed_roles:
                     return view_func(request, *args, **kwargs)
@@ -60,7 +64,18 @@ def role_required(allowed_roles=['admin', 'staff', 'viewer']):
                     messages.error(request, 'Anda tidak memiliki akses ke halaman ini.')
                     return redirect('user_home')
             except UserProfile.DoesNotExist:
-                messages.error(request, 'Profile user tidak ditemukan.')
+                # Jika tidak ada UserProfile, buat otomatis
+                UserProfile.objects.create(
+                    user=request.user,
+                    role='viewer',
+                    phone='',
+                    department=''
+                )
+                messages.info(request, 'Profile user telah dibuat otomatis.')
+                return view_func(request, *args, **kwargs)
+            except Exception as e:
+                print(f"Role check error: {e}")
+                messages.error(request, 'Terjadi error saat memeriksa akses.')
                 return redirect('user_home')
         return wrapper
     return decorator
