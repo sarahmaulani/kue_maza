@@ -21,6 +21,8 @@ class UserProfile(models.Model):
     #mo nampilin username sama roleny
     def __str__(self):
         return f"{self.user.username} ({self.role})"
+    def __str__(self):
+        return self.user.username
     
     # role nya apa yang bisa di akses pun apa
     def is_admin(self):
