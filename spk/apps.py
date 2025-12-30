@@ -6,4 +6,5 @@ class SpkConfig(AppConfig):
     name = 'spk'
 
     def ready(self):
-        import spk.signals
+        # import spk.signals
+        pass
