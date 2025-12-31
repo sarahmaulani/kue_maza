@@ -196,13 +196,20 @@ def hasil_topsis(request, periode_id=None):
 @login_required
 def input_nilai(request):
     """Halaman input nilai"""
-    try:
-        # Cek akses
-        has_access, user_profile = check_user_access(request.user, ['admin', 'staff'])
+     user_profile, created = UserProfile.objects.get_or_create(
+            user=request.user,
+            defaults={
+                'role': 'viewer',
+                'phone': '',
+                'department': '',
+                'alamat': ''
+            }
+        )
         
-        if not has_access:
-            messages.error(request, 'Hanya Admin dan Staff yang bisa input data.')
-            return redirect('user_home')
+        # 2. TAMPILKAN PESAN, TAPI JANGAN REDIRECT!
+        if created:
+            messages.info(request, 'Profile user telah dibuat otomatis.')
+        
         
         periode_aktif = Periode.objects.filter(is_active=True).order_by('-tanggal_mulai').first()
         
