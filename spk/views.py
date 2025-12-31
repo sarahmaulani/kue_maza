@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 import json
 from .models import Produk, Kriteria, NilaiProduk, Periode, UserProfile
 from .utils import hitung_topsis
@@ -14,6 +15,7 @@ from .analytics import (
     get_kriteria_analysis
 )
 
+@csrf_exempt
 def user_login(request):
     """Handle user login dengan role check"""
     if request.user.is_authenticated:
