@@ -21,6 +21,7 @@ DEBUG = True # ← SET FALSE untuk Railway
 # Host yang diizinkan mengakses
 ALLOWED_HOSTS = [
     'kuemaza-production.up.railway.app',
+    'kuemaza-production.railway.app',
     'localhost',
     '127.0.0.1',
     '.railway.app',
@@ -29,6 +30,7 @@ ALLOWED_HOSTS = [
 # CSRF & Security untuk Railway (HTTPS)
 CSRF_TRUSTED_ORIGINS = [
     'https://kuemaza-production.up.railway.app',
+    'https://*.railway.app',
     'https://*.up.railway.app',
 ]
 
@@ -39,11 +41,15 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_DOMAIN = '.up.railway.app'
+CSRF_COOKIE_DOMAIN = 'kuemaza-production.up.railway.app'
 CSRF_USE_SESSIONS = True
-SESSION_COOKIE_DOMAIN = '.up.railway.app'
+SESSION_COOKIE_DOMAIN = 'kuemaza-production.up.railway.app'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600  # 2 minggu
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+USE_X_FORWARDED_HOST = True
+SECURE_SSL_REDIRECT = True
 
 CORS_ALLOWED_ORIGINS = [
     'https://kuemaza-production.up.railway.app',
