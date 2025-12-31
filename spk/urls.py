@@ -1,5 +1,14 @@
 from django.urls import path
-from . import views
+from .views import (
+    user_home, 
+    user_login, 
+    user_logout,  
+    hasil_topsis, 
+    index, 
+    input_nilai, 
+    analytics_dashboard, 
+    export_report
+)
 
 urlpatterns = [
     path('', views.index, name='index'),
