@@ -60,6 +60,10 @@ class Periode(models.Model):
     class Meta:
         ordering = ['-tanggal_mulai']
 
+    def nama_periode(self):
+        """Backward compatibility - return nama"""
+        return self.nama
+
     def __str__(self):
         status = "(Aktif)" if self.is_active else "(Nonaktif)"
         return f"{status} {self.nama} {self.tahun}"
