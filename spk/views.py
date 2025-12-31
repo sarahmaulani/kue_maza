@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponseForbidden, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.core.cache import cache
 import json
 from .models import Produk, Kriteria, NilaiProduk, Periode, UserProfile
 from .utils import hitung_topsis
@@ -46,9 +47,23 @@ def user_login(request):
 
 def user_logout(request):
     """Handle user logout"""
+    cache_key = f"user_{request.user.id}_session"
+    cache.delete(cache_key)
+    
+    # Clear semua session data
+    request.session.flush()
+    
+    # Django logout
     logout(request)
+    
+    # Add no-cache headers ke response
+    response = redirect('login')
+    response['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    
     messages.success(request, 'Anda telah berhasil logout.')
-    return redirect('login')
+    return response
 
 # def role_required(allowed_roles=['admin', 'staff', 'viewer']):
 #     def decorator(view_func):
