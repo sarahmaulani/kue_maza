@@ -147,6 +147,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # ========== DEFAULT SETTINGS ==========
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEBUG = False
+
 # ========== CUSTOM SETTINGS ==========
 LOGIN_URL = '/spk/login/'
 LOGIN_REDIRECT_URL = '/spk/home/'
