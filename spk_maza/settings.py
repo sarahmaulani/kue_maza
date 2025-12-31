@@ -68,16 +68,28 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ← TAMBAH INI untuk static files
+    'django.middleware.cache.UpdateCacheMiddleware', 
+    'whitenoise.middleware.WhiteNoiseMiddleware',  
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'spk_maza.urls'
+
+# Cache Control Settings
+CACHE_MIDDLEWARE_SECONDS = 0  # No cache
+CACHE_MIDDLEWARE_KEY_PREFIX = 'spk'
+CACHE_MIDDLEWARE_ALIAS = 'default'
+
+# Security Headers
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 TEMPLATES = [
     {
