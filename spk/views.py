@@ -322,7 +322,7 @@ def analytics_dashboard(request):
         print(f"Error di analytics: {e}")
         messages.error(request, 'Terjadi error saat memuat data analytics.')
         return redirect('user_home')
-@role_required(['admin', 'staff', 'viewer'])
+@login_required(login_url='/spk/login/')
 def export_report(request, report_type='ranking'):
     """Export laporan - hanya untuk admin & staff"""
     try:
