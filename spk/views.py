@@ -102,6 +102,7 @@ def check_user_access(user, allowed_roles=['admin', 'staff', 'viewer']):
         return True, user_profile
 
 @login_required
+@never_cache
 def user_home(request):
     """Dashboard utama - accessible by all roles"""
     try:
@@ -196,6 +197,7 @@ def hasil_topsis(request, periode_id=None):
         return render(request, 'spk/hasil_topsis.html', context)
 
 @login_required
+@never_cache
 def input_nilai(request):
     """Halaman input nilai"""
     try:
@@ -280,6 +282,7 @@ def input_nilai(request):
         return redirect('user_home')
 
 @login_required
+@never_cache
 def analytics_dashboard(request):
     """Halaman analytics"""
     try:
