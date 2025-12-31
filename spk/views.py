@@ -159,7 +159,7 @@ def user_home(request):
         }
         return render(request, 'spk/home.html', context)
 
-@role_required(['admin', 'staff', 'viewer'])
+@login_required(login_url='/spk/login/')
 def hasil_topsis(request, periode_id=None):
     """Halaman hasil TOPSIS - accessible by all roles"""
     try:
