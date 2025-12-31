@@ -29,7 +29,7 @@ ALLOWED_HOSTS = [
 # CSRF & Security untuk Railway (HTTPS)
 CSRF_TRUSTED_ORIGINS = [
     'https://kuemaza-production.up.railway.app',
-    'https://*.railway.app',
+    'https://*.up.railway.app',
 ]
 
 # HTTPS settings untuk Railway
@@ -39,6 +39,15 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
+CSRF_COOKIE_DOMAIN = '.up.railway.app'
+CSRF_USE_SESSIONS = True
+SESSION_COOKIE_DOMAIN = '.up.railway.app'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 1209600  # 2 minggu
+
+CORS_ALLOWED_ORIGINS = [
+    'https://kuemaza-production.up.railway.app',
+]
 
 # ========== APPLICATION DEFINITION ==========
 INSTALLED_APPS = [
