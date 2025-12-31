@@ -48,37 +48,56 @@ def user_logout(request):
     messages.success(request, 'Anda telah berhasil logout.')
     return redirect('login')
 
-def role_required(allowed_roles=['admin', 'staff', 'viewer']):
-    def decorator(view_func):
-        @login_required(login_url='/spk/login/')
-        def wrapper(request, *args, **kwargs):
-            try:
-                # Cek jika user sudah logout
-                if not request.user.is_authenticated:
-                    return redirect('login')
+# def role_required(allowed_roles=['admin', 'staff', 'viewer']):
+#     def decorator(view_func):
+#         @login_required(login_url='/spk/login/')
+#         def wrapper(request, *args, **kwargs):
+#             try:
+#                 # Cek jika user sudah logout
+#                 if not request.user.is_authenticated:
+#                     return redirect('login')
                     
-                user_profile = UserProfile.objects.get(user=request.user)
-                if user_profile.role in allowed_roles:
-                    return view_func(request, *args, **kwargs)
-                else:
-                    messages.error(request, 'Anda tidak memiliki akses ke halaman ini.')
-                    return redirect('user_home')
-            except UserProfile.DoesNotExist:
-                # Jika tidak ada UserProfile, buat otomatis
-                UserProfile.objects.create(
-                    user=request.user,
-                    role='viewer',
-                    phone='',
-                    department=''
-                )
-                messages.info(request, 'Profile user telah dibuat otomatis.')
-                return view_func(request, *args, **kwargs)
-            except Exception as e:
-                print(f"Role check error: {e}")
-                messages.error(request, 'Terjadi error saat memeriksa akses.')
-                return redirect('user_home')
-        return wrapper
-    return decorator
+#                 user_profile = UserProfile.objects.get(user=request.user)
+#                 if user_profile.role in allowed_roles:
+#                     return view_func(request, *args, **kwargs)
+#                 else:
+#                     messages.error(request, 'Anda tidak memiliki akses ke halaman ini.')
+#                     return redirect('user_home')
+#             except UserProfile.DoesNotExist:
+#                 # Jika tidak ada UserProfile, buat otomatis
+#                 UserProfile.objects.create(
+#                     user=request.user,
+#                     role='viewer',
+#                     phone='',
+#                     department=''
+#                 )
+#                 messages.info(request, 'Profile user telah dibuat otomatis.')
+#                 return view_func(request, *args, **kwargs)
+#             except Exception as e:
+#                 print(f"Role check error: {e}")
+#                 messages.error(request, 'Terjadi error saat memeriksa akses.')
+#                 return redirect('user_home')
+#         return wrapper
+#     return decorator
+
+def check_user_access(user, allowed_roles=['admin', 'staff', 'viewer']):
+    """Cek akses user, return (has_access, user_profile)"""
+    try:
+        user_profile = UserProfile.objects.get(user=user)
+        if user_profile.role in allowed_roles:
+            return True, user_profile
+        else:
+            return False, user_profile
+    except UserProfile.DoesNotExist:
+        # Buat otomatis dengan role 'viewer'
+        user_profile = UserProfile.objects.create(
+            user=user,
+            role='viewer',
+            phone='',
+            department='',
+            alamat=''
+        )
+        return True, user_profile
 
 @login_required
 def user_home(request):
@@ -174,25 +193,34 @@ def hasil_topsis(request, periode_id=None):
         }
         return render(request, 'spk/hasil_topsis.html', context)
 
-@role_required(['admin', 'staff', 'viewer'])
+@login_required
 def input_nilai(request):
-    """Halaman input nilai - hanya untuk admin & staff"""
+    """Halaman input nilai"""
     try:
-        user_profile = UserProfile.objects.get(user=request.user)
+        # Cek akses
+        has_access, user_profile = check_user_access(request.user, ['admin', 'staff'])
         
-        # if not user_profile.can_input_data():
-        #     messages.error(request, 'Anda tidak memiliki izin untuk input data.')
-        #     return redirect('user_home')
+        if not has_access:
+            messages.error(request, 'Hanya Admin dan Staff yang bisa input data.')
+            return redirect('user_home')
         
         periode_aktif = Periode.objects.filter(is_active=True).order_by('-tanggal_mulai').first()
         
         if not periode_aktif:
-            messages.error(request, 'Tidak ada periode aktif. Silakan hubungi admin.')
-            return redirect('user_home')
+            messages.error(request, 'Tidak ada periode aktif.')
+            return render(request, 'spk/input_nilai.html', {
+                'user': request.user,
+                'user_profile': user_profile,
+                'periode_aktif': None,
+                'produk_list': [],
+                'kriteria_user': [],
+                'nilai_user': [],
+            })
         
         kriteria_user = Kriteria.objects.filter(bisa_diinput_user=True)
         
         if request.method == 'POST':
+            # ... KODE POST ANDA YANG LAMA ...
             produk_id = request.POST.get('produk')
             kriteria_id = request.POST.get('kriteria')
             nilai = request.POST.get('nilai')
@@ -241,31 +269,52 @@ def input_nilai(request):
         messages.error(request, 'Terjadi error saat mengakses halaman input data.')
         return redirect('user_home')
 
-@role_required(['admin', 'staff', 'viewer'])
+@login_required
 def analytics_dashboard(request):
-    """Halaman analytics - hanya untuk admin & staff"""
+    """Halaman analytics"""
     try:
-        user_profile = UserProfile.objects.get(user=request.user)
+        # Semua role bisa akses analytics
+        has_access, user_profile = check_user_access(request.user)
+        
+        if not has_access:
+            messages.error(request, 'Tidak bisa mengakses halaman ini.')
+            return redirect('user_home')
+        
         periode_aktif = Periode.objects.filter(is_active=True).order_by('-tanggal_mulai').first()
         semua_periode = Periode.objects.all().order_by('-tanggal_mulai')
         
-        sales_analytics = get_sales_analytics()
-        improvements = get_improvement_analysis()
-        kriteria_analysis = get_kriteria_analysis(periode_aktif)
-        
-        periode_sebelumnya = periode_aktif.get_periode_sebelumnya() if periode_aktif else None
-        performance_comparison = get_performance_comparison(periode_sebelumnya, periode_aktif)
+        # Hanya admin/staff yang bisa lihat analytics detail
+        if user_profile.role in ['admin', 'staff']:
+            try:
+                sales_analytics = get_sales_analytics()
+                improvements = get_improvement_analysis()
+                kriteria_analysis = get_kriteria_analysis(periode_aktif)
+                
+                periode_sebelumnya = periode_aktif.get_periode_sebelumnya() if periode_aktif else None
+                performance_comparison = get_performance_comparison(periode_sebelumnya, periode_aktif)
+            except:
+                # Jika error, tampilkan data kosong
+                sales_analytics = {}
+                improvements = []
+                kriteria_analysis = {}
+                performance_comparison = {}
+        else:
+            # Viewer hanya lihat basic
+            sales_analytics = {}
+            improvements = []
+            kriteria_analysis = {}
+            performance_comparison = {}
         
         context = {
             'user': request.user,
             'user_profile': user_profile,
             'periode_aktif': periode_aktif,
             'semua_periode': semua_periode,
-            'periode_sebelumnya': periode_sebelumnya,
             'sales_analytics_json': json.dumps(sales_analytics),
             'improvements': improvements,
             'kriteria_analysis': kriteria_analysis,
             'performance_comparison': performance_comparison,
+            'is_admin_staff': user_profile.role in ['admin', 'staff'],
         }
         return render(request, 'spk/analytics.html', context)
         
@@ -273,7 +322,6 @@ def analytics_dashboard(request):
         print(f"Error di analytics: {e}")
         messages.error(request, 'Terjadi error saat memuat data analytics.')
         return redirect('user_home')
-
 @role_required(['admin', 'staff', 'viewer'])
 def export_report(request, report_type='ranking'):
     """Export laporan - hanya untuk admin & staff"""
