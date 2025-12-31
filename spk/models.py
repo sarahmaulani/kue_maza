@@ -49,7 +49,7 @@ class UserProfile(models.Model):
 # periode waktu u/ penilaian
 class Periode(models.Model):
     nama = models.CharField(max_length=100)
-    nama_periode = models.CharField(max_length=100, default='Periode 1')
+    # nama_periode = models.CharField(max_length=100, default='Periode 1')
     tahun = models.IntegerField(default=2024)
 
     tanggal_mulai = models.DateField()
