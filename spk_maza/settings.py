@@ -68,6 +68,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'spk.middleware.NoCacheMiddleware',
     'django.middleware.cache.UpdateCacheMiddleware', 
     'whitenoise.middleware.WhiteNoiseMiddleware',  
     'django.contrib.sessions.middleware.SessionMiddleware',
