@@ -197,7 +197,7 @@ def hasil_topsis(request, periode_id=None):
 def input_nilai(request):
     """Halaman input nilai"""
     try:
-         user_profile, created = UserProfile.objects.get_or_create(
+        user_profile, created = UserProfile.objects.get_or_create(
             user=request.user,
             defaults={
                 'role': 'viewer',
