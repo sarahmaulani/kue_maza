@@ -84,7 +84,8 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
-ROOT_URLCONF = 'spk_maza.urls'
+WSGI_APPLICATION = 'kue_maza.wsgi.application'
+ROOT_URLCONF = 'kue_maza.urls'
 
 # Cache Control Settings
 CACHE_MIDDLEWARE_SECONDS = 0  # No cache
