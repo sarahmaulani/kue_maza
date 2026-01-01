@@ -156,9 +156,6 @@
             <div class="user-info">
                 <div class="user-welcome">
                     Halo, <strong>{{ user.username }}</strong>
-                    <small style="display: block; font-size: 0.8em; opacity: 0.8;">
-                        ( {{ user_profile.get_role_display }} )
-                    </small>
                 </div>
                 <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
             </div>
@@ -175,17 +172,17 @@
             </a>
 
             <a href="{% url 'hasil_topsis' %}" 
-               class="{% if 'hasil' in request.path %}{% endif %}">
+               class="{% if 'hasil' in request.path %}active{% endif %}">
                Hasil Ranking
             </a>
 
             <a href="{% url 'input_nilai' %}" 
-               class="{% if 'input-nilai' in request.path %}{% endif %}">
+               class="{% if 'input-nilai' in request.path %}active{% endif %}">
                Input Data
             </a>
 
             <a href="{% url 'analytics_dashboard' %}" 
-               class="{% if 'analytics' in request.path %}{% endif %}">
+               class="{% if 'analytics' in request.path %}active{% endif %}">
                Analisis
             </a>
         </div>
