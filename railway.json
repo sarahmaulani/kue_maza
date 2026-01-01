@@ -1,8 +1,12 @@
 {
+  "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "builder": "NIXPACKS"
+    "builder": "NIXPACKS",
+    "buildCommand": "python -m pip install --upgrade pip && pip install -r requirements.txt && python manage.py collectstatic --noinput"
   },
   "deploy": {
-    "startCommand": "python manage.py migrate && python create_admin.py && gunicorn spk_maza.wsgi"
+    "startCommand": "python manage.py migrate && gunicorn kue_maza.wsgi:application",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
   }
 }
