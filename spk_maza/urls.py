@@ -8,6 +8,6 @@ def health_check(request):
 urlpatterns = [
     path('', health_check),  # Halaman utama jadi health check
     path('health/', health_check),  # Backup route
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('spk/', include('spk.urls')),
 ]
