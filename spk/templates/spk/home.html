@@ -230,7 +230,22 @@
             </div>
         </div>
     </div>
+    <div class="paragraf-produk">
+    <h3>Kesimpulan Strategis</h3>
 
+    {% if produk_terbaik %}
+        <p>
+            Secara keseluruhan, hasil metode TOPSIS menunjukkan adanya dominasi kuat
+            pada produk <strong>{{ produk_terbaik.produk }}</strong>
+            dengan nilai preferensi <strong>{{ produk_terbaik.nilai|floatformat:3 }}</strong>.
+            Manajemen dapat mengalokasikan anggaran bahan baku lebih besar pada produk tersebut.
+            Sementara itu, untuk produk dengan peringkat rendah, manajemen dapat menerapkan
+            sistem <em>made-by-order</em> guna menjaga efisiensi biaya operasional.
+        </p>
+    {% else %}
+        <p>Data TOPSIS belum tersedia.</p>
+    {% endif %}
+    </div>
     <script>
         // Data dr Django
         const dataContainer = document.getElementById('data-container');
