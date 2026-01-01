@@ -138,6 +138,8 @@ def user_home(request):
         total_produk = Produk.objects.count()
         total_nilai = NilaiProduk.objects.count()
         nilai_user = NilaiProduk.objects.filter(created_by=request.user).count()
+
+        produk_terbaik = hasil_topsis[0] if hasil_topsis else None
         
         context = {
             'hasil': hasil_topsis,
@@ -153,6 +155,7 @@ def user_home(request):
             'top_performers': top_performers,
             'improvements': improvements,
             'kriteria_analysis': kriteria_analysis,
+            'produk_terbaik': produk_terbaik,
         }
         return render(request, 'spk/home.html', context)
         
