@@ -46,7 +46,8 @@ CSRF_COOKIE_SECURE = True
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
 CSRF_COOKIE_DOMAIN = 'kuemaza-production.up.railway.app'
-CSRF_USE_SESSIONS = True
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_DOMAIN = 'kuemaza-production.up.railway.app'
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 SESSION_COOKIE_AGE = 1209600  # 2 minggu
@@ -72,12 +73,12 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'spk.middleware.NoCacheMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware', 
-    'whitenoise.middleware.WhiteNoiseMiddleware',  
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'spk.middleware.NoCacheMiddleware',
+    'django.middleware.cache.UpdateCacheMiddleware', 
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
