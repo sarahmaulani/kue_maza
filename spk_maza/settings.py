@@ -25,7 +25,7 @@ DEBUG = True # ← SET FALSE untuk Railway
 # Host yang diizinkan mengakses
 ALLOWED_HOSTS = [
     'kuemaza-production.up.railway.app',
-    'kuemaza-production.railway.app',
+    # 'kuemaza-production.railway.app',
     'localhost',
     '127.0.0.1',
     '.railway.app',
@@ -84,8 +84,8 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
-WSGI_APPLICATION = 'kue_maza.wsgi.application'
-ROOT_URLCONF = 'kue_maza.urls'
+WSGI_APPLICATION = 'spk_maza.wsgi.application'
+ROOT_URLCONF = 'spk_maza.urls'
 
 # Cache Control Settings
 CACHE_MIDDLEWARE_SECONDS = 0  # No cache
